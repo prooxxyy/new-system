@@ -1,0 +1,370 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NEXTGEN SMART CLASSROOM SYSTEM</title>
+    <!-- Include official qrcode library for real scannable output generation -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <style>
+
+        body {
+            font-family: Arial;
+            background-color: transparent;
+            background-image: url(nextgen_image/nextgen.jpg);
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 10px;
+        }
+        .container {
+            max-width: 420px;
+            margin: 10px auto;
+            background: rgba(255,255,255,0.22);
+            padding: 40px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.42);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        h1 {
+            font-size: 30px;
+            text-align: center;
+        }
+        h3{
+            font-size: 25px;
+            text-align: center;
+        }
+        label {
+            font-size: 15px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 24.9rem;
+            padding: 10px;
+            margin: 5px 0 10px;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background: #007bff;
+            color: white;
+            font-size: 14px;
+        }
+        button:last-child {
+            background: #28a745;
+        }
+        #qrModal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+        #qrText {
+            font-size: 11px;
+            white-space: pre-wrap;
+            background: #f4f4f4;
+            padding: 8px;
+            margin-top: 10px;
+            max-height: 80px;
+            overflow-y: auto;
+            text-align: left;
+        }
+        /* QR TREE GENERATION EXPERIENCE */
+        #qrTreeExperience {
+            display: none;
+            position: relative;
+            width: 240px;
+            height: 240px;
+            margin: 0 auto 12px;
+            border-radius: 18px;
+            overflow: hidden;
+            background: #0b2117;
+            perspective: 800px;
+        }
+        #qrTreeExperience.active {
+            display: block;
+        }
+        .qr-tree-world {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 190px;
+            height: 190px;
+            margin-left: -95px;
+            margin-top: -95px;
+            transform-style: preserve-3d;
+            transform: rotateX(58deg) rotateZ(-35deg);
+            transition: transform 1.1s ease;
+        }
+        .qr-tree-world.overhead {
+            transform: rotateX(0deg) rotateZ(0deg) scale(1.04);
+        }
+        .qr-tree-ground {
+            position: absolute;
+            inset: 0;
+            border: 3px solid #315c36;
+            border-radius: 12px;
+            background: linear-gradient(135deg,#397b3c,#183d24);
+            box-shadow: 9px 9px 0 #102719;
+            transition: background 1s ease, box-shadow 1s ease;
+        }
+        .qr-tree-world.qr-mode .qr-tree-ground {
+            background-color: #214f2b;
+            box-shadow: 9px 9px 0 #102719, 0 0 28px rgba(80,255,120,.45);
+        }
+        .qr-tree {
+            position: absolute;
+            width: 130px;
+            height: 175px;
+            left: 30px;
+            top: 7px;
+            transform: translateZ(35px);
+            transition: opacity .65s ease, transform .9s ease;
+        }
+        .qr-tree-world.qr-mode .qr-tree {
+            opacity: 0;
+            transform: translateZ(90px) scale(.55);
+        }
+        .qr-tree-trunk {
+            position: absolute;
+            width: 27px;
+            height: 95px;
+            left: 52px;
+            bottom: 17px;
+            border-radius: 45% 45% 20% 20%;
+            background: linear-gradient(90deg,#4c2919,#a66a36,#3d2417);
+            transform: rotate(-5deg);
+        }
+        .qr-tree-branch {
+            position: absolute;
+            width: 16px;
+            height: 58px;
+            left: 33px;
+            bottom: 82px;
+            border-radius: 20px;
+            background: #70452a;
+            transform: rotate(-45deg);
+        }
+        .qr-tree-branch.right {
+            left: 76px;
+            transform: rotate(42deg);
+        }
+        .qr-tree-leaves {
+            position: absolute;
+            width: 112px;
+            height: 112px;
+            left: 9px;
+            top: 9px;
+            border-radius: 50%;
+            background: 
+                radial-gradient(circle at 30% 25%,#b5ff72 0 8%,transparent 9%),
+                radial-gradient(circle at 70% 35%,#8ce75d 0 12%,transparent 13%),
+                radial-gradient(circle at 35% 70%,#4bb84c 0 14%,transparent 15%),
+                radial-gradient(circle at 70% 75%,#2e843d 0 15%,transparent 16%),
+                #317c3c;
+            box-shadow: 
+                -19px 19px 0 -4px #2b7138,
+                19px 16px 0 -6px #429a43,
+                0 0 20px rgba(130,255,100,.35);
+        }
+        .qr-tree-pattern {
+            position: absolute;
+            inset: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(.7);
+            transition: opacity .85s ease, transform .85s ease;
+            pointer-events: none;
+        }
+        .qr-tree-world.qr-mode .qr-tree-pattern {
+            opacity: 1;
+            transform: scale(1);
+        }
+        #qrCanvasElement {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        #qrGenerationStatus {
+            display: none;
+            margin: 0 0 10px;
+            font-size: 12px;
+            color: #2d7a42;
+            font-weight: bold;
+        }
+        #qrGenerationStatus.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>NextGen Smart Classroom</h1>
+    <h3> Attendance Log </h3>
+    <label>PC Number</label>
+    <input id="pcnumber" type="number">
+    <label>Full Name</label>
+    <input id="fullname">
+    <label>Grade</label>
+    <input id="grade">
+    <label>School</label>
+    <input id="school">
+    <label>Pre-Test Score</label>
+    <input id="pretest" type="number">
+    <label>Post-Test Score</label>
+    <input id="posttest" type="number">
+    <label>Feedback</label>
+    <textarea id="feedback"></textarea>
+    <button onclick="generateQR()">Generate QR Code</button>
+</div>
+
+<!-- QR MODAL -->
+<div id="qrModal">
+    <div class="modal-box">
+        <h3 style="font-size:14px; margin-top:0;">Generated QR</h3>
+
+        <div id="qrTreeExperience" aria-hidden="true">
+            <div class="qr-tree-world" id="qrTreeWorld">
+                <div class="qr-tree-ground"></div>
+                <div class="qr-tree-pattern" id="qrTreePattern">
+                    <!-- Real scannable canvas gets injected here -->
+                    <canvas id="qrCanvasElement"></canvas>
+                </div>
+                <div class="qr-tree">
+                    <div class="qr-tree-leaves"></div>
+                    <div class="qr-tree-branch"></div>
+                    <div class="qr-tree-branch right"></div>
+                    <div class="qr-tree-trunk"></div>
+                </div>
+            </div>
+        </div>
+        <div id="qrGenerationStatus">Preparing QR code...</div>
+
+        <pre id="qrText"></pre>
+
+        <button onclick="closeQR()" style="margin-top:10px;background:#dc3545;">Close</button>
+    </div>
+</div>
+
+<script>
+    let qrGenerationTimer = null;
+    const qrTreeExperience = document.getElementById("qrTreeExperience");
+    const qrTreeWorld = document.getElementById("qrTreeWorld");
+    const qrGenerationStatus = document.getElementById("qrGenerationStatus");
+
+    function renderRealQRCode(text) {
+        const canvas = document.getElementById("qrCanvasElement");
+        // Generate actual scannable data matrix using qrcode library
+        QRCode.toCanvas(canvas, text, {
+            width: 170,
+            margin: 1,
+            color: {
+                dark: "#0b2117",
+                light: "#a4ff76"
+            }
+        }, function (error) {
+            if (error) console.error(error);
+        });
+    }
+
+    function resetTreeExperience() {
+        qrTreeWorld.classList.remove("overhead", "qr-mode");
+        qrTreeExperience.classList.remove("active");
+        qrGenerationStatus.classList.remove("active");
+        qrTreeExperience.setAttribute("aria-hidden", "true");
+
+        if (qrGenerationTimer) {
+            clearTimeout(qrGenerationTimer);
+            qrGenerationTimer = null;
+        }
+    }
+
+    function playQRTreeGeneration(text, onComplete) {
+        renderRealQRCode(text);
+
+        qrTreeExperience.classList.add("active");
+        qrTreeExperience.setAttribute("aria-hidden", "false");
+        qrGenerationStatus.classList.add("active");
+        qrGenerationStatus.textContent = "Growing QR tree...";
+
+        qrTreeWorld.classList.remove("overhead", "qr-mode");
+
+        requestAnimationFrame(() => {
+            qrTreeWorld.classList.add("overhead");
+            qrGenerationStatus.textContent = "Transforming into QR...";
+
+            qrGenerationTimer = setTimeout(() => {
+                qrTreeWorld.classList.add("qr-mode");
+                qrGenerationStatus.textContent = "3D Tree QR Code Ready.";
+
+                if (onComplete) onComplete();
+            }, 650);
+        });
+    }
+
+    function generateQR() {
+        const pcnumber = document.getElementById("pcnumber").value.trim();
+        const fullname = document.getElementById("fullname").value.trim();
+        const grade = document.getElementById("grade").value.trim();
+        const school = document.getElementById("school").value.trim();
+        const pretest = document.getElementById("pretest").value.trim();
+        const posttest = document.getElementById("posttest").value.trim();
+        const feedback = document.getElementById("feedback").value.trim();
+
+        if (!pcnumber || !fullname || !grade || !school) {
+            alert("Please complete PC Number, Full Name, Grade, and School");
+            return;
+        }
+
+        const qrData = {
+            pcnumber,
+            fullname,
+            grade,
+            school,
+            pretest,
+            posttest,
+            feedback
+        };
+
+        const text = JSON.stringify(qrData);
+        showQR(text);
+    }
+
+    function showQR(text) {
+        document.getElementById("qrText").textContent = text;
+        document.getElementById("qrModal").style.display = "flex";
+
+        playQRTreeGeneration(text);
+    }
+
+    function closeQR() {
+        document.getElementById("qrModal").style.display = "none";
+        resetTreeExperience();
+    }
+</script>
+
+</body>
+</html>

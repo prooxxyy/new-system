@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Digital Fridays</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- QR Generator Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+</head>
+
+<body>
+
+
+    <!-- ==========================================
+         TOP NAVIGATION
+    =========================================== -->
+
+    <header class="top-navigation">
+
+        <div class="logo-area">
+
+            <div class="logo-icon">
+                ✓
+            </div>
+
+            <div class="logo-text">
+
+                <h2>
+                    Digital Fridays Log
+                </h2>
+
+                <span>
+                    Attendance System
+                </span>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ==========================================
+         MAIN CONTENT
+    =========================================== -->
+
+    <main class="page-container">
+
+
+        <!-- PAGE HEADING -->
+
+        <section class="page-heading">
+
+            <span class="heading-label">
+                ATTENDANCE SYSTEM
+            </span>
+
+            <h1>
+                QR Code Generator
+            </h1>
+
+        </section>
+
+
+
+        <!-- ==========================================
+             GENERATOR
+        =========================================== -->
+
+        <section class="generator-layout">
+
+
+            <!-- ======================================
+                 RESPONDENT FORM
+            ======================================= -->
+
+            <div class="generator-card">
+
+
+                <div class="card-title">
+
+                    <div class="title-icon">
+                        👤
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Respondent Information
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- FORM -->
+
+                <form
+                    id="attendanceForm"
+                    onsubmit="event.preventDefault(); generateQR();"
+                >
+
+
+                    <!-- FULL NAME -->
+
+                    <div class="input-group">
+
+                        <label for="name">
+                            Full Name
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                👤
+                            </span>
+
+                            <input
+                                type="text"
+                                id="name"
+                                placeholder="Enter full name"
+                                autocomplete="name"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- OFFICE -->
+
+                    <div class="input-group">
+
+                        <label for="office">
+                            Office/Department
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🏢
+                            </span>
+
+                            <input
+                                type="text"
+                                id="office"
+                                placeholder="Enter office"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- POSITION -->
+
+                    <div class="input-group">
+
+                        <label for="position">
+                            Position
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                💼
+                            </span>
+
+                            <input
+                                type="text"
+                                id="position"
+                                placeholder="Enter position"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PRE-TEST -->
+
+                    <div class="input-group">
+
+                        <label for="pretest">
+                            Pre-Test
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                📝
+                            </span>
+
+                            <input
+                                type="number"
+                                id="pretest"
+                                placeholder="Enter pre-test score"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- POST-TEST -->
+
+                    <div class="input-group">
+
+                        <label for="posttest">
+                            Post-Test
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                📝
+                            </span>
+
+                            <input
+                                type="number"
+                                id="posttest"
+                                placeholder="Enter post-test score"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- GENERATE BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="generate-button"
+                    >
+
+                        <span class="button-icon">
+                            ▣
+                        </span>
+
+                        Generate QR Code
+
+                    </button>
+
+                </form>
+
+            </div>
+
+
+
+            <!-- ======================================
+                 QR PREVIEW
+            ======================================= -->
+
+            <div class="qr-card">
+
+
+                <!-- QR HEADER -->
+
+                <div class="qr-card-header">
+
+                    <div>
+
+                        <span class="small-title">
+                            GENERATED QR
+                        </span>
+
+                        <h2>
+                            Attendance QR
+                        </h2>
+
+                    </div>
+
+                    <div class="qr-symbol">
+                        ▣
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     QR PLACEHOLDER
+                =================================== -->
+
+                <div
+                    id="qrPlaceholder"
+                    class="qr-placeholder"
+                >
+
+                    <div class="placeholder-icon">
+                        ▣
+                    </div>
+
+                    <h3>
+                        QR Code Not Generated
+                    </h3>
+
+                </div>
+
+
+
+                <!-- ==================================
+                     QR RESULT
+                =================================== -->
+
+                <div
+                    id="qrResult"
+                    class="qr-result"
+                >
+
+
+                    <!-- QR CODE -->
+
+                    <div
+                        id="qrcode"
+                        class="qrcode"
+                    ></div>
+
+
+
+                    <!-- STATUS -->
+
+                    <div class="qr-status">
+
+                        <span class="status-dot"></span>
+
+                        QR Code Ready
+
+                    </div>
+
+
+
+                    <!-- INFORMATION -->
+
+                    <div class="qr-information">
+
+
+                        <!-- NAME -->
+
+                        <div class="info-item">
+
+                            <span>
+                                Full Name
+                            </span>
+
+                            <strong id="qrName">
+                                -
+                            </strong>
+
+                        </div>
+
+
+
+                        <!-- OFFICE -->
+
+                        <div class="info-item">
+
+                            <span>
+                                Office
+                            </span>
+
+                            <strong id="qrOffice">
+                                -
+                            </strong>
+
+                        </div>
+
+
+
+                        <!-- POSITION -->
+
+                        <div class="info-item">
+
+                            <span>
+                                Position
+                            </span>
+
+                            <strong id="qrPosition">
+                                -
+                            </strong>
+
+                        </div>
+                        <!-- PRE-TEST -->
+
+<div class="info-item">
+
+    <span>
+        Pre-Test
+    </span>
+
+    <strong id="qrPretest">
+        -
+    </strong>
+
+</div>
+
+
+<!-- POST-TEST -->
+
+<div class="info-item">
+
+    <span>
+        Post-Test
+    </span>
+
+    <strong id="qrPosttest">
+        -
+    </strong>
+
+</div>
+
+
+
+                        <!-- DATE -->
+
+                        <div class="info-item">
+
+                            <span>
+                                Date & Time
+                            </span>
+
+                            <strong id="qrDate">
+                                -
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- DOWNLOAD -->
+
+                    <button
+                        type="button"
+                        class="download-qr-button"
+                        onclick="downloadQR()"
+                    >
+
+                        <span>
+                            ↓
+                        </span>
+
+                        Download QR Code
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="employee-client.js"></script>
+
+</body>
+
+</html>

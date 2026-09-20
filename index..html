@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NEXTGEN SMART CLASSROOM</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            /* YOUR NEXTGEN BACKGROUND */
+            background-image: url("NextGen Smart Classroom.png");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================
+           BACKGROUND OVERLAY
+        ===================================== */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            background: rgba(0, 30, 80, 0.25);
+
+            z-index: -1;
+        }
+
+
+        /* =====================================
+           MAIN CONTAINER
+        ===================================== */
+
+        .landing-container {
+            width: min(92%, 1050px);
+
+            padding: 45px 45px 50px;
+
+            background: rgba(255, 255, 255, 0.78);
+
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            border: 1px solid rgba(255, 255, 255, 0.8);
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.25);
+
+            text-align: center;
+        }
+
+
+        /* =====================================
+           TITLE
+        ===================================== */
+
+        .system-title {
+            font-size: 17px;
+
+            font-weight: bold;
+
+            letter-spacing: 3px;
+
+            color: #0757b8;
+
+            margin-bottom: 12px;
+        }
+
+
+        .welcome-title {
+            font-size: clamp(30px, 5vw, 48px);
+
+            font-weight: 800;
+
+            color: #111d3b;
+
+            margin-bottom: 12px;
+        }
+
+
+        .subtitle {
+            font-size: 17px;
+
+            color: #4d5565;
+
+            margin-bottom: 38px;
+        }
+
+
+        /* =====================================
+           OPTIONS
+        ===================================== */
+
+        .options {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 22px;
+
+            width: 100%;
+        }
+
+
+        /* =====================================
+           OPTION CARD
+        ===================================== */
+
+        .option-card {
+            text-decoration: none;
+
+            background: rgba(255, 255, 255, 0.95);
+
+            border: 2px solid transparent;
+
+            border-radius: 18px;
+
+            padding: 30px 20px;
+
+            color: #17233f;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
+
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.10);
+        }
+
+
+        .option-card:hover {
+            transform: translateY(-8px);
+
+            border-color: #168be8;
+
+            box-shadow:
+                0 15px 30px rgba(0, 90, 180, 0.20);
+        }
+
+
+        /* =====================================
+           ICON
+        ===================================== */
+
+        .option-icon {
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 50%;
+
+            background: linear-gradient(
+                135deg,
+                #0757b8,
+                #00a6e8
+            );
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            font-size: 34px;
+
+            color: white;
+
+            box-shadow:
+                0 8px 18px rgba(0, 100, 200, 0.25);
+        }
+
+
+        /* =====================================
+           OPTION TITLE
+        ===================================== */
+
+        .option-card h2 {
+            font-size: 22px;
+
+            margin-bottom: 10px;
+
+            color: #14264c;
+        }
+
+
+        .option-card p {
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            color: #626b7c;
+
+            min-height: 42px;
+        }
+
+
+        /* =====================================
+           SELECT BUTTON
+        ===================================== */
+
+       .select-button {
+    display: inline-block;
+
+    margin-top: 20px;
+    padding: 10px 22px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #0879d1;
+    color: white;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.select-button:hover {
+    background: #0757b8;
+    transform: translateY(-2px);
+}
+
+.select-button:active {
+    transform: translateY(0);
+}
+
+.select-button:focus-visible {
+    outline: 3px solid rgba(0, 166, 232, 0.4);
+    outline-offset: 3px;
+}
+
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        .footer {
+            margin-top: 35px;
+
+            font-size: 12px;
+
+            color: #6d7482;
+        }
+
+
+        /* =====================================
+           TABLET
+        ===================================== */
+
+        @media (max-width: 800px) {
+
+            .landing-container {
+                padding: 35px 25px;
+            }
+
+            .options {
+                grid-template-columns: 1fr;
+            }
+
+            .option-card {
+                padding: 25px;
+            }
+
+            .option-card p {
+                min-height: auto;
+            }
+        }
+
+
+        /* =====================================
+           MOBILE
+        ===================================== */
+
+        @media (max-width: 500px) {
+
+            body {
+                padding: 15px;
+
+                background-attachment: scroll;
+            }
+
+            .landing-container {
+                width: 100%;
+
+                padding: 30px 18px;
+
+                border-radius: 18px;
+            }
+
+            .system-title {
+                font-size: 13px;
+
+                letter-spacing: 2px;
+            }
+
+            .welcome-title {
+                font-size: 29px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+
+                margin-bottom: 25px;
+            }
+
+            .option-card {
+                padding: 23px 15px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <main class="landing-container">
+
+        <div class="system-title">
+            NEXTGEN SMART CLASSROOM
+        </div>
+
+        <h1 class="welcome-title">
+            Welcome To NextGen Smart Classroom
+        </h1>
+
+        <p class="subtitle">
+            Please select your user type to continue.
+        </p>
+
+
+        <!-- =================================
+             USER OPTIONS
+        ================================= -->
+
+       <div class="options">
+
+    <!-- STUDENT -->
+    <div class="option-card">
+
+        <div class="option-icon">
+            🎓
+        </div>
+
+        <h2>Student</h2>
+
+        <p>
+            Access student registration,
+            assessment, attendance, and QR
+            services.
+        </p>
+
+        <button
+            type="button"
+            class="select-button"
+            onclick="window.location.href='student.html'">
+            Continue
+        </button>
+
+    </div>
+
+
+    <!-- VISITOR -->
+    <div class="option-card">
+
+        <div class="option-icon">
+            👤
+        </div>
+
+        <h2>Visitor</h2>
+
+        <p>
+            Register your visit and provide
+            the necessary visitor information.
+        </p>
+
+        <button
+            type="button"
+            class="select-button"
+            onclick="window.location.href='visitor.html'">
+            Continue
+        </button>
+
+    </div>
+
+
+    <!-- EMPLOYEE / CLIENT -->
+    <div class="option-card">
+
+        <div class="option-icon">
+            💼
+        </div>
+
+        <h2>Employee / Client</h2>
+
+        <p>
+            Access employee and client
+            registration and related services.
+        </p>
+
+        <button
+            type="button"
+            class="select-button"
+            onclick="window.location.href='employee-client.html'">
+            Continue
+        </button>
+
+    </div>
+
+</div>
+
+        <div class="footer">
+            © 2026 NextGen Smart Classroom
+        </div>
+
+    </main>
+
+</body>
+
+</html>
